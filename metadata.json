@@ -1,0 +1,5 @@
+{
+  "name": "Shadow Seal",
+  "description": "A secure data sealing system with client-side encryption, tamper detection, and anomaly logging.",
+  "requestFramePermissions": []
+}
