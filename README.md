@@ -1,55 +1,139 @@
 # Shadow Seal
 
-Shadow Seal is a secure data sealing system. It performs client-side AES-GCM encryption before uploading data to the server. The server stores the encrypted blobs in MongoDB GridFS and adds an HMAC signature to prevent tampering.
+Shadow Seal is a client-side encryption dashboard built with React, TypeScript, and Vite. It demonstrates secure file sealing, password-based decryption flows, and security logging in a polished single-page interface that is ready to build and deploy on Vercel.
 
-## Architecture
+## Project Overview
 
-- **Frontend**: React + Tailwind + Web Crypto API.
-- **Backend**: Node.js + Express + MongoDB (GridFS).
-- **Security**:
-  - **Client**: PBKDF2 key derivation (240k iterations), AES-GCM (256-bit key).
-  - **Server**: JWT Auth, Rate Limiting, Server-side HMAC signing of metadata.
+The app provides three main areas:
+
+- A file sealing workflow that encrypts data in the browser.
+- A decrypt workflow with a mock encrypted vault.
+- A security dashboard that visualizes activity and logs.
+
+The current workspace is a frontend-only Vite application. The repository now builds successfully in production and is suitable for static deployment on Vercel.
+
+## Features
+
+- Client-side AES-GCM encryption.
+- PBKDF2 key derivation.
+- Encrypt and decrypt dashboard panels.
+- Security activity charts and logs.
+- Responsive layout for desktop and mobile.
+- Production-ready Vite build.
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Vite 6
+- Lucide React
+- Recharts
+
+## Folder Structure
+
+```text
+Shadow-Seal-
+├─ App.tsx
+├─ components/
+│  ├─ Dashboard.tsx
+│  ├─ EncryptPanel.tsx
+│  ├─ DecryptPanel.tsx
+│  ├─ LogsPanel.tsx
+│  └─ ui/
+│     ├─ Button.tsx
+│     └─ Card.tsx
+├─ constants.ts
+├─ index.css
+├─ index.html
+├─ index.tsx
+├─ services/
+│  └─ crypto.ts
+├─ types.ts
+├─ vite.config.ts
+├─ .env.example
+└─ package.json
+```
+
+## Prerequisites
+
+- Node.js 18 or later
+- npm 9 or later
 
 ## Installation
 
-### Prerequisites
-- Node.js (v18+)
-- MongoDB running locally or Atlas URI
+```bash
+git clone <repository-url>
+cd Shadow-Seal-
+npm install
+```
 
-### Setup
+## Environment Variables
 
-1. **Server**
-   ```bash
-   cd server
-   npm install
-   cp .env.example .env
-   npm start
-   ```
+The app currently does not require environment variables to build. A placeholder file is provided for compatibility with the original scaffold.
 
-2. **Client**
-   ```bash
-   # In project root
-   npm install
-   npm start
-   ```
+`.env.example`
 
-## API Documentation
+```bash
+GEMINI_API_KEY=PLACEHOLDER_API_KEY
+```
 
-### POST /api/auth/register
-Registers a new user.
-Body: `{ "username": "user", "password": "pwd" }`
+If you add real backend or AI integration later, copy `.env.example` to `.env` and fill in the values.
 
-### POST /api/encrypt
-Uploads an encrypted file blob.
-Headers: `Authorization: Bearer <token>`
-Form-Data: 
-- `file`: (Binary encrypted data)
-- `iv`: Base64 string
-- `salt`: Base64 string
-- `originalName`: string
+## Development Setup
+
+```bash
+npm run dev
+```
+
+Vite serves the app locally, usually at `http://localhost:3000`.
+
+## Build Instructions
+
+```bash
+npm run build
+```
+
+## Running Locally
+
+```bash
+npm run dev
+npm run preview
+```
+
+## Production Deployment on Vercel
+
+This repository is compatible with Vercel as a static Vite app.
+
+Recommended Vercel settings:
+
+- Build command: `npm run build`
+- Output directory: `dist`
+- Install command: `npm install`
+
+If you configure environment variables in Vercel, mirror the names from `.env.example`.
+
+## Backend Setup
+
+The current workspace does not include a backend folder. If you add one later, document it here and include its install and start commands.
+
+## API Endpoints
+
+No live backend API endpoints are currently shipped in this workspace.
 
 ## Security Features
 
-1. **Zero-Knowledge Storage**: The server never sees the plaintext password or the unencrypted file content.
-2. **Tamper Detection**: Metadata is signed with a server secret. If the database is compromised and metadata changed, signature verification fails.
-3. **Anomaly Detection**: Logs repeated failures or high-frequency requests.
+- PBKDF2-based key derivation.
+- AES-GCM encryption for authenticated encryption.
+- Browser-side file handling before any simulated storage step.
+- Security logging and anomaly-style reporting in the UI.
+
+## Troubleshooting
+
+- If imports fail, verify the `components/` and `services/` folders exist and that the casing matches the import path.
+- If the build fails, rerun `npm install` and `npm run build` from the repository root.
+- If Vercel shows a deployment error, confirm the output directory is `dist`.
+- If fonts or global styles do not load, ensure `index.css` is present and linked from `index.html`.
+
+## License
+
+No license has been specified for this project.
